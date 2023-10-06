@@ -1,6 +1,6 @@
 package com.generateToken.generateToken.services.jwt;
 
-import com.generateToken.generateToken.entities.User;
+import com.generateToken.generateToken.entities.Doctor;
 import com.generateToken.generateToken.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -20,10 +20,10 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 
         //Write Logic to get the user from the DB
-        User user = userRepository.findFirstByEmail(email);
-        if (user == null) {
+        Doctor doctor = userRepository.findFirstByEmail(email);
+        if (doctor == null) {
             throw new UsernameNotFoundException("User not found", null);
         }
-        return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), new ArrayList<>());
+        return new org.springframework.security.core.userdetails.User(doctor.getEmail(), doctor.getPassword(), new ArrayList<>());
     }
 }
