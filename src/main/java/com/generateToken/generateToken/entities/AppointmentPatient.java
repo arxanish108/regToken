@@ -28,4 +28,13 @@ public class AppointmentPatient {
     private LocalDate appointmentDate;
     private LocalTime appointmentTime;
     private  String clinicLocation;
+
+    @ManyToOne()
+    @JoinColumn(name = "clinicId")
+    private Clinic clinic;
+
+    @ManyToOne
+    @JoinColumn(name = "doctorId")
+    private Doctor doctor;
+
 }

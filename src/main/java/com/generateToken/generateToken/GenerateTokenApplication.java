@@ -8,7 +8,8 @@ import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfi
 public class GenerateTokenApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(GenerateTokenApplication.class, args);
-	}
 
+		SpringApplication.run(GenerateTokenApplication.class, args);
+
+	}
 }

@@ -1,12 +1,13 @@
 package com.generateToken.generateToken.dto;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.generateToken.generateToken.entities.Clinic;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -26,4 +27,5 @@ public class DoctorDTO {
     @Column(unique = true)
     private String email;
     private String password;
+    private List<Clinic> clinics = new ArrayList<>();
 }

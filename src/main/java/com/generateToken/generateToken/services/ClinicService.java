@@ -5,4 +5,5 @@ import com.generateToken.generateToken.entities.Clinic;
 
 public interface ClinicService {
     Clinic addClinic(ClinicDto clinicDto);
+
 }

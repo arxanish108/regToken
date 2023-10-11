@@ -35,16 +35,16 @@ public class SignUpUserController {
         return new ResponseEntity<>(createdUser, HttpStatus.CREATED);
     }
 
-    @PostMapping("/{doctorId}/clinics")
-    public ResponseEntity<String> addClinicToDoctor(@PathVariable Long doctorId, @RequestBody Clinic clinic) {
-        Optional<Doctor> optionalDoctor = doctorRepository.findById(doctorId);
-        if (optionalDoctor.isPresent()) {
-            Doctor doctor = optionalDoctor.get();
-            clinic.setDoctor(doctor); // Set the relationship
-            clinicRepository.save(clinic);
-            return ResponseEntity.ok("Clinic added to the doctor successfully.");
-        } else {
-            return ResponseEntity.notFound().build();
-        }
-    }
+//    @PostMapping("/{doctorId}/clinics")
+//    public ResponseEntity<String> addClinicToDoctor(@PathVariable Long doctorId, @RequestBody Clinic clinic) {
+//        Optional<Doctor> optionalDoctor = doctorRepository.findById(doctorId);
+//        if (optionalDoctor.isPresent()) {
+//            Doctor doctor = optionalDoctor.get();
+//            clinic.setDoctor(doctor); // Set the relationship
+//            clinicRepository.save(clinic);
+//            return ResponseEntity.ok("Clinic added to the doctor successfully.");
+//        } else {
+//            return ResponseEntity.notFound().build();
+//        }
+//    }
 }

@@ -13,6 +13,7 @@ import java.time.LocalTime;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ClinicDto {
+    private int clinicId;
 
     private String location;
     private String incharge;
@@ -20,7 +21,4 @@ public class ClinicDto {
     private LocalTime startTime;
     private LocalTime endTime;
 
-    @ManyToOne
-    @JoinColumn
-    private Doctor doctor;
 }

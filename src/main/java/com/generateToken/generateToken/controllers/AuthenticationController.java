@@ -23,13 +23,10 @@ public class AuthenticationController {
 
     @Autowired
     private JwtUtil jwtUtil;
-
     @Autowired
     private AuthenticationManager authenticationManager;
-
     @Autowired
     private UserDetailsServiceImpl userDetailsService;
-
     @PostMapping("/authenticate")
     public AuthenticationResponse createAuthenticationToken(@RequestBody AuthenticationRequest authenticationRequest, HttpServletResponse response) throws BadCredentialsException, DisabledException, UsernameNotFoundException, IOException {
         try {
@@ -41,12 +38,9 @@ public class AuthenticationController {
             return null;
         }
 
+
         final UserDetails userDetails = userDetailsService.loadUserByUsername(authenticationRequest.getEmail());
-
         final String jwt = jwtUtil.generateToken(userDetails.getUsername());
-
         return new AuthenticationResponse(jwt);
-
-
     }
 }

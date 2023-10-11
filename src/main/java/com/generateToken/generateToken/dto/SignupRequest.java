@@ -6,6 +6,8 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.Data;
 
+import java.util.List;
+
 @Data
 public class SignupRequest {
 
@@ -20,5 +22,7 @@ public class SignupRequest {
     @Column(unique = true)
     private String email;
     private String password;
+
+    private List<ClinicDto> clinicDtoList;
 
 }

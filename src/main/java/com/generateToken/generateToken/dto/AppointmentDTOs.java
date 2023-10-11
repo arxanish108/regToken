@@ -13,11 +13,11 @@ import java.util.Date;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+
 public class AppointmentDTOs {
     private String name;
     private String contactNumber;
     private String aadharNumber;
-
 
     private int age;
     @Enumerated(EnumType.STRING)
