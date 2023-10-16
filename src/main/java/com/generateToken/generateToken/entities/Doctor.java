@@ -33,6 +33,13 @@ public class Doctor {
     @OneToMany( cascade = CascadeType.ALL)
     private List<Clinic> clinics = new ArrayList<>();
 
+//    @OneToMany(mappedBy = "doctor",cascade = CascadeType.ALL)
+//    private List<Clinic> clinics = new ArrayList<>();
+
+    public void addClinicsToDoctor(Clinic clinic){
+        this.clinics.add(clinic);
+    }
+
     @OneToMany( cascade = CascadeType.ALL)
     private List<AppointmentPatient> appointmentPatientList = new ArrayList<>();
 

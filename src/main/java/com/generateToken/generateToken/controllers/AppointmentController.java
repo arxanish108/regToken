@@ -42,7 +42,9 @@ public class AppointmentController {
     @GetMapping("/getByNumber")
     public ResponseEntity<AppointmentPatient> getPatientByAadhar(@RequestParam String aadharCardNumber){
 
+
         AppointmentPatient patient = appointmentService.getByAadhar(aadharCardNumber);
+
 
         if(patient!=null){
             return ResponseEntity.ok(patient);

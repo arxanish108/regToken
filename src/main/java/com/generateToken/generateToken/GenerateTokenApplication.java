@@ -12,4 +12,5 @@ public class GenerateTokenApplication {
 		SpringApplication.run(GenerateTokenApplication.class, args);
 
 	}
+
 }

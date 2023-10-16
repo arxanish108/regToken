@@ -1,5 +1,6 @@
 package com.generateToken.generateToken.entities;
 
+import com.generateToken.generateToken.dto.ClinicDto;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -27,7 +28,7 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Clinic implements Serializable {
+public class Clinic {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -40,8 +41,10 @@ public class Clinic implements Serializable {
 
 
     @ManyToOne
-    @JoinColumn
+    @JoinColumn(name = "doctorId")
     private Doctor doctor;
+
+
 
     @OneToMany( cascade = CascadeType.ALL)
     private List<AppointmentPatient> clinics = new ArrayList<>();

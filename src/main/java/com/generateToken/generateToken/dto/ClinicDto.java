@@ -1,8 +1,7 @@
 package com.generateToken.generateToken.dto;
 
 import com.generateToken.generateToken.entities.Doctor;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,6 +12,9 @@ import java.time.LocalTime;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ClinicDto {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     private int clinicId;
 
     private String location;

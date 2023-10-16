@@ -7,6 +7,8 @@ import com.generateToken.generateToken.services.ClinicService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class ClinicServiceImpl implements ClinicService {
     @Autowired
@@ -21,13 +23,14 @@ public class ClinicServiceImpl implements ClinicService {
         clinic.setStartTime(clinicDto.getStartTime());
         clinic.setEndTime(clinicDto.getEndTime());
         Clinic createdClinic = clinicRepository.save(clinic);
-//        ClinicDto clinicDto1 = new ClinicDto();
-//        clinicDto1.setLocation(createdClinic.getLocation());
-//        clinicDto1.setIncharge(createdClinic.getIncharge());
-//        clinicDto1.setFees(createdClinic.getFees());
-//        clinicDto1.setTime(createdClinic.getTime());
+
         return createdClinic;
     }
+
+    public Optional<Clinic> getClinicById(Long clinicId) {
+        return clinicRepository.findById(clinicId);
+    }
+
 
 
 }
