@@ -1,8 +1,7 @@
 package com.generateToken.generateToken.services.Impl;
 
-import com.generateToken.generateToken.Gender.Gender;
 import com.generateToken.generateToken.dto.AppointmentDTOs;
-import com.generateToken.generateToken.entities.AppointmentPatient;
+import com.generateToken.generateToken.entities.Appointment;
 import com.generateToken.generateToken.entities.Clinic;
 import com.generateToken.generateToken.entities.Doctor;
 import com.generateToken.generateToken.repositories.AppointmentRepository;
@@ -10,15 +9,8 @@ import com.generateToken.generateToken.repositories.ClinicRepository;
 import com.generateToken.generateToken.repositories.UserRepository;
 import com.generateToken.generateToken.services.AppointmentService;
 import jakarta.persistence.EntityNotFoundException;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.util.List;
 
 @Service
 public class AppointmentImpl implements AppointmentService {
@@ -30,41 +22,24 @@ public class AppointmentImpl implements AppointmentService {
 
     @Autowired
     private ClinicRepository clinicRepository;
-//    @Override
-//    public String bookAppointment(AppointmentDTOs appointmentDto) {
-//        AppointmentPatient patientAppointment = new AppointmentPatient();
-//
-//        patientAppointment.setName(appointmentDto.getName());
-//        patientAppointment.setContactNumber(appointmentDto.getContactNumber());
-//        patientAppointment.setAadharNumber(appointmentDto.getAadharNumber());
-//        patientAppointment.setAge(appointmentDto.getAge());
-//        patientAppointment.setGender(appointmentDto.getGender());
-//        patientAppointment.setAppointmentDate(appointmentDto.getAppointmentDate());
-//        patientAppointment.setAppointmentTime(appointmentDto.getAppointmentTime());
-//        patientAppointment.setClinicLocation(appointmentDto.getClinicLocation());
-//
-//        patientAppointment = appointmentRepository.save(patientAppointment);
-//
-//        return "Slot Bookend Successfully";
-//    }
 
     @Override
-    public AppointmentPatient getByAadhar(String aadharCard) {
+    public Appointment getByAadhar(String aadharCard) {
       // return appointmentRepository.findByAadharCard(aadharCard);
         return null;
     }
 
     @Override
-    public AppointmentDTOs bookAppointment(Long clinicId, AppointmentDTOs appointmentDto) {
+    public AppointmentDTOs bookAppointment(Long doctorId,Long clinicId, AppointmentDTOs appointmentDto) {
 
         Clinic clinic = clinicRepository.findById(clinicId)
                 .orElseThrow(() -> new EntityNotFoundException("Clinic not found"));
 
-        Doctor doctor = userRepository.findById(clinicId)
+        Doctor doctor = userRepository.findById(doctorId)
                 .orElseThrow(() -> new EntityNotFoundException("Doctor not found"));
 
 
-        AppointmentPatient patientAppointment = new AppointmentPatient();
+        Appointment patientAppointment = new Appointment();
 
         patientAppointment.setName(appointmentDto.getName());
         patientAppointment.setContactNumber(appointmentDto.getContactNumber());

@@ -1,12 +1,11 @@
 package com.generateToken.generateToken.repositories;
 
-import com.generateToken.generateToken.entities.AppointmentPatient;
+import com.generateToken.generateToken.entities.Appointment;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import org.springframework.stereotype.Service;
 
 @Repository
-public interface AppointmentRepository extends JpaRepository<AppointmentPatient,Integer> {
+public interface AppointmentRepository extends JpaRepository<Appointment,Integer> {
     //AppointmentPatient findByAadharCard(String aadharCard);
 
 }

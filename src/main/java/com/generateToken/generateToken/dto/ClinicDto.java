@@ -23,4 +23,6 @@ public class ClinicDto {
     private LocalTime startTime;
     private LocalTime endTime;
 
+    private Doctor doctor;
+
 }

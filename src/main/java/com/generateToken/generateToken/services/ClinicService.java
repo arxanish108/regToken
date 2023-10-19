@@ -1,14 +1,16 @@
 package com.generateToken.generateToken.services;
 
+import com.generateToken.generateToken.dto.AppointmentDTOs;
 import com.generateToken.generateToken.dto.ClinicDto;
 import com.generateToken.generateToken.entities.Clinic;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface ClinicService {
-    Clinic addClinic(ClinicDto clinicDto);
+    ClinicDto addClinic(Long userId,ClinicDto clinicDto);
 
     Optional<Clinic> getClinicById(Long id);
 
-    //Optional<ClinicDto> getClinicById(Long clinicId);
+    List<AppointmentDTOs> getAppointments(Long clinicId);
 }

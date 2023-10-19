@@ -21,10 +21,7 @@ public class SignUpUserController {
     @Autowired
     private AuthService authService;
 
-    @Autowired
-    private UserRepository doctorRepository;
-    @Autowired
-    private ClinicRepository clinicRepository;
+
     @PostMapping("/register")
     public ResponseEntity<?> signupUser(@RequestBody SignupRequest signupRequest) {
 
@@ -47,4 +44,17 @@ public class SignUpUserController {
 //            return ResponseEntity.notFound().build();
 //        }
 //    }
+
+    @GetMapping("/get")
+    public ResponseEntity<DoctorDTO> getUser(@RequestParam Long docId){
+
+        DoctorDTO doctor =  authService.getDoctor(docId);
+
+        if (doctor != null) {
+            return ResponseEntity.ok(doctor);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+
+    }
 }

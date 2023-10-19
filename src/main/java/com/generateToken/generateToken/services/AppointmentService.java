@@ -1,15 +1,11 @@
 package com.generateToken.generateToken.services;
 
 import com.generateToken.generateToken.dto.AppointmentDTOs;
-import com.generateToken.generateToken.entities.AppointmentPatient;
-
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
+import com.generateToken.generateToken.entities.Appointment;
 
 public interface AppointmentService {
     //String bookAppointment(AppointmentDTOs appointmentDto);
-    AppointmentPatient getByAadhar(String aadharCard);
+    Appointment getByAadhar(String aadharCard);
 
-    AppointmentDTOs bookAppointment(Long clinicId,AppointmentDTOs appointmentPatient );
+    AppointmentDTOs bookAppointment(Long doctorId,Long clinicId,AppointmentDTOs appointmentPatient );
 }

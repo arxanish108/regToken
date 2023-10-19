@@ -4,10 +4,8 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.apache.tomcat.jni.Library;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 @Entity
@@ -30,25 +28,19 @@ public class Doctor {
     @Column(unique = true)
     private String email;
     private String password;
+
     @OneToMany( cascade = CascadeType.ALL)
     private List<Clinic> clinics = new ArrayList<>();
 
-//    @OneToMany(mappedBy = "doctor",cascade = CascadeType.ALL)
-//    private List<Clinic> clinics = new ArrayList<>();
-
-    public void addClinicsToDoctor(Clinic clinic){
+    public void addClinic(Clinic clinic){
         this.clinics.add(clinic);
     }
 
-    @OneToMany( cascade = CascadeType.ALL)
-    private List<AppointmentPatient> appointmentPatientList = new ArrayList<>();
+    @OneToMany(mappedBy = "doctor",cascade = CascadeType.ALL)
+    private List<Appointment> appointmentPatientList = new ArrayList<>();
 
-    public void addAppointmentPatient1(AppointmentPatient appointmentPatient){
-        this.appointmentPatientList.add(appointmentPatient);
+    public void addAppointmentPatient1(Appointment appointment){
+        this.appointmentPatientList.add(appointment);
     }
-
-//    @OneToMany(cascade = CascadeType.ALL)
-//    @JoinColumn
-//    private AppointmentPatient appointmentPatient;
 
 }

@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -34,7 +35,7 @@ public class AuthServiceImpl implements AuthService{
     @Transient
     public DoctorDTO createUser(SignupRequest signupRequest) {
         Doctor doctor = new Doctor();
-        List<Clinic> clinicList = mapAllClinics(signupRequest.getClinicDtoList());
+        //List<Clinic> clinicList = mapAllClinics(signupRequest.getClinicDtoList());
         doctor.setName(signupRequest.getName());
         doctor.setSpecialization(signupRequest.getSpecialization());
         doctor.setDegree(signupRequest.getDegree());
@@ -43,7 +44,7 @@ public class AuthServiceImpl implements AuthService{
         doctor.setCitations(signupRequest.getCitations());
         doctor.setContact(signupRequest.getContact());
         doctor.setEmail(signupRequest.getEmail());
-        doctor.setClinics(clinicList);
+      //  doctor.setClinics(clinicList);
         //user.setPassword(signupRequest.getPassword());
         doctor.setPassword(new BCryptPasswordEncoder().encode(signupRequest.getPassword()));
         Doctor createdDoctor = userRepository.save(doctor);
@@ -90,15 +91,37 @@ public class AuthServiceImpl implements AuthService{
 
     }
 
-    private List<Clinic> mapAllClinics(List<ClinicDto> clinicDtoList){
-        return clinicDtoList.stream().map(data -> {
-            Clinic clinic = new Clinic();
-            clinic.setLocation(data.getLocation());
-            clinic.setIncharge(data.getIncharge());
-            return clinic;
-        }).collect(Collectors.toList());
+//    private List<Clinic> mapAllClinics(List<ClinicDto> clinicDtoList){
+//        return clinicDtoList.stream().map(data -> {
+//            Clinic clinic = new Clinic();
+//            clinic.setLocation(data.getLocation());
+//            clinic.setIncharge(data.getIncharge());
+//            return clinic;
+//        }).collect(Collectors.toList());
+//
+//    }
 
+    public DoctorDTO getDoctor(Long id) {
+       // return userRepository.findById(id).orElse(null);
+       // return userRepository.findById(id).orElse(null);
+        Optional<Doctor> optionalDoctor = userRepository.findById(id);
+        if(optionalDoctor.isPresent()){
+            Doctor createdDoctor = optionalDoctor.get();
+            DoctorDTO doctorDTO = new DoctorDTO();
+            doctorDTO.setName(createdDoctor.getName());
+            doctorDTO.setSpecialization(createdDoctor.getSpecialization());
+            doctorDTO.setDegree(createdDoctor.getDegree());
+            doctorDTO.setExperience(createdDoctor.getExperience());
+            doctorDTO.setResearch_journal(createdDoctor.getResearch_journal());
+            doctorDTO.setCitations(createdDoctor.getCitations());
+            doctorDTO.setContact(createdDoctor.getContact());
+            doctorDTO.setEmail(createdDoctor.getEmail());
+            doctorDTO.setPassword(createdDoctor.getPassword());
+            doctorDTO.setClinics(createdDoctor.getClinics());
+            return doctorDTO;
+        }else{
+            return null;
+        }
     }
-
 
 }
