@@ -16,13 +16,11 @@ public class ClinicDto {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private int clinicId;
-
     private String location;
     private String incharge;
     private int fees;
     private LocalTime startTime;
     private LocalTime endTime;
-
     private Doctor doctor;
 
 }

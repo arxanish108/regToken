@@ -2,59 +2,52 @@ package com.generateToken.generateToken.controllers;
 
 import com.generateToken.generateToken.dto.SignupRequest;
 import com.generateToken.generateToken.dto.DoctorDTO;
-import com.generateToken.generateToken.entities.Clinic;
-import com.generateToken.generateToken.entities.Doctor;
-import com.generateToken.generateToken.repositories.ClinicRepository;
-import com.generateToken.generateToken.repositories.UserRepository;
-import com.generateToken.generateToken.services.AuthService;
+import com.generateToken.generateToken.services.DoctorService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Optional;
+import java.util.Date;
 
 @RestController
 @RequestMapping("/home")
 public class SignUpUserController {
 
     @Autowired
-    private AuthService authService;
-
+    private DoctorService doctorService;
 
     @PostMapping("/register")
     public ResponseEntity<?> signupUser(@RequestBody SignupRequest signupRequest) {
 
-        DoctorDTO createdUser = authService.createUser(signupRequest);
+        DoctorDTO createdUser = doctorService.createUser(signupRequest);
         if (createdUser == null){
             return new ResponseEntity<>("User not created, come again later!", HttpStatus.BAD_REQUEST);
         }
         return new ResponseEntity<>(createdUser, HttpStatus.CREATED);
     }
 
-//    @PostMapping("/{doctorId}/clinics")
-//    public ResponseEntity<String> addClinicToDoctor(@PathVariable Long doctorId, @RequestBody Clinic clinic) {
-//        Optional<Doctor> optionalDoctor = doctorRepository.findById(doctorId);
-//        if (optionalDoctor.isPresent()) {
-//            Doctor doctor = optionalDoctor.get();
-//            clinic.setDoctor(doctor); // Set the relationship
-//            clinicRepository.save(clinic);
-//            return ResponseEntity.ok("Clinic added to the doctor successfully.");
-//        } else {
-//            return ResponseEntity.notFound().build();
-//        }
-//    }
-
     @GetMapping("/get")
     public ResponseEntity<DoctorDTO> getUser(@RequestParam Long docId){
 
-        DoctorDTO doctor =  authService.getDoctor(docId);
+        DoctorDTO doctor =  doctorService.getDoctor(docId);
 
         if (doctor != null) {
             return ResponseEntity.ok(doctor);
         } else {
             return ResponseEntity.notFound().build();
         }
-
     }
+
+    @GetMapping("/amount")
+    public ResponseEntity<?> getAmount(@RequestParam Long docId,
+    @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date startDate,
+                                       @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date endDate)
+                                      {
+
+        Double amt = doctorService.findAmt(docId,startDate,endDate);
+        return ResponseEntity.ok(amt);
+    }
+
 }

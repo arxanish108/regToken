@@ -1,7 +1,7 @@
 package com.generateToken.generateToken.services.jwt;
 
 import com.generateToken.generateToken.entities.Doctor;
-import com.generateToken.generateToken.repositories.UserRepository;
+import com.generateToken.generateToken.repositories.DoctorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -13,14 +13,14 @@ import java.util.ArrayList;
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
     @Autowired
-    private UserRepository userRepository;
+    private DoctorRepository doctorRepository;
 
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 
         //Write Logic to get the user from the DB
-        Doctor doctor = userRepository.findFirstByEmail(email);
+        Doctor doctor = doctorRepository.findFirstByEmail(email);
         if (doctor == null) {
             throw new UsernameNotFoundException("User not found", null);
         }

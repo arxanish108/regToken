@@ -6,7 +6,7 @@ import com.generateToken.generateToken.entities.Clinic;
 import com.generateToken.generateToken.entities.Doctor;
 import com.generateToken.generateToken.repositories.AppointmentRepository;
 import com.generateToken.generateToken.repositories.ClinicRepository;
-import com.generateToken.generateToken.repositories.UserRepository;
+import com.generateToken.generateToken.repositories.DoctorRepository;
 import com.generateToken.generateToken.services.AppointmentService;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +18,7 @@ public class AppointmentImpl implements AppointmentService {
     private AppointmentRepository appointmentRepository;
 
     @Autowired
-    private UserRepository userRepository;
+    private DoctorRepository doctorRepository;
 
     @Autowired
     private ClinicRepository clinicRepository;
@@ -35,7 +35,7 @@ public class AppointmentImpl implements AppointmentService {
         Clinic clinic = clinicRepository.findById(clinicId)
                 .orElseThrow(() -> new EntityNotFoundException("Clinic not found"));
 
-        Doctor doctor = userRepository.findById(doctorId)
+        Doctor doctor = doctorRepository.findById(doctorId)
                 .orElseThrow(() -> new EntityNotFoundException("Doctor not found"));
 
 
@@ -72,7 +72,7 @@ public class AppointmentImpl implements AppointmentService {
 
         patientAppointment = appointmentRepository.save(patientAppointment);
         clinic = clinicRepository.save(clinic);
-        doctor = userRepository.save(doctor);
+        doctor = doctorRepository.save(doctor);
 
         return appointmentDto1;
     }

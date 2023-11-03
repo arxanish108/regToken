@@ -28,7 +28,6 @@ public class DoctorDTO {
     private String email;
     private String password;
     private List<Clinic> clinics = new ArrayList<>();
-
     public void addClinic(Clinic clinic){
         this.clinics.add(clinic);
     }

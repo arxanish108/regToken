@@ -24,8 +24,8 @@ public class WebSecurityConfiguration {
       return  http.csrf(csrf -> csrf.disable())
                .authorizeHttpRequests(authorizeHttpRequests -> {
                    authorizeHttpRequests
-                           .requestMatchers("/authenticate", "/sign-up","/home/register","/home/**","/clinic/**","/appointment/book1","/clinic/getApt").permitAll()
-                           .requestMatchers("/api/**").authenticated();
+                           .requestMatchers("/authenticate", "/sign-up","/home/register","/home/**","/clinic/betweenDate","/appointment/book1","/clinic/getApt").permitAll()
+                           .requestMatchers("/api/**","/home/amount","/clinic/amount").authenticated();
                } )
               .sessionManagement(sessionManagement ->
                       sessionManagement
@@ -41,9 +41,8 @@ public class WebSecurityConfiguration {
 
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
-
         return config.getAuthenticationManager();
-
     }
+
 
 }

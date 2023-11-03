@@ -22,7 +22,6 @@ public class SignupRequest {
     @Column(unique = true)
     private String email;
     private String password;
-
     private List<ClinicDto> clinicDtoList;
 
 }

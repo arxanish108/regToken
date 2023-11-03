@@ -51,5 +51,4 @@ public class Appointment {
         return appointmentDTOs;
     }
 
-
 }

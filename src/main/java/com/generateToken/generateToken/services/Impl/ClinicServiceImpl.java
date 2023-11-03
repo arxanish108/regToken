@@ -3,17 +3,21 @@ package com.generateToken.generateToken.services.Impl;
 import com.generateToken.generateToken.dto.AppointmentDTOs;
 import com.generateToken.generateToken.dto.ClinicDto;
 import com.generateToken.generateToken.dto.DoctorDTO;
+import com.generateToken.generateToken.entities.Appointment;
 import com.generateToken.generateToken.entities.Clinic;
 import com.generateToken.generateToken.entities.Doctor;
+import com.generateToken.generateToken.repositories.AppointmentRepository;
 import com.generateToken.generateToken.repositories.ClinicRepository;
-import com.generateToken.generateToken.repositories.UserRepository;
+import com.generateToken.generateToken.repositories.DoctorRepository;
 import com.generateToken.generateToken.services.ClinicService;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
+import java.time.LocalDate;
+import java.util.*;
+import java.util.stream.Collectors;
+import java.sql.Date;
 
 @Service
 public class ClinicServiceImpl implements ClinicService {
@@ -21,15 +25,61 @@ public class ClinicServiceImpl implements ClinicService {
     private ClinicRepository clinicRepository;
 
     @Autowired
-    private UserRepository doctorRepository;
+    private AppointmentRepository appointmentRepository;
 
-    public List<AppointmentDTOs> getAppointments (Long clinicId){
+    @Autowired
+    private DoctorRepository doctorRepository;
+
+    public List<AppointmentDTOs> getAppointments(Long clinicId) {
 
         Clinic clinic = clinicRepository.findById(clinicId)
                 .orElseThrow(() -> new EntityNotFoundException("Clinic not found"));
-        System.out.println(clinic.getId());
 
-        return  clinic.getAppointmentDto();
+        return clinic.getAppointmentDto();
+    }
+
+    @Override
+    public List<AppointmentDTOs> getAppointmentBetweenDate(Long clinicId, LocalDate startDate, LocalDate endDate) {
+        Clinic clinic = clinicRepository.findById(clinicId)
+                .orElseThrow(() -> new EntityNotFoundException("Clinic not found"));
+
+        List<AppointmentDTOs> appointments = clinic.getAppointmentDto();
+
+        return appointments.stream()
+                .filter(appointment -> {
+                    LocalDate appointmentDate = appointment.getAppointmentDate();
+                    return !appointmentDate.isBefore(startDate) && !appointmentDate.isAfter(endDate);
+                })
+                .collect(Collectors.toList());
+//        List<AppointmentDTOs> appointmentDTOs1 = new ArrayList<>();
+//        for(AppointmentDTOs appointmentDTOs : appointments){
+//            if(!appointmentDTOs.getAppointmentDate().isBefore(startDate) && !appointmentDTOs.getAppointmentDate().isAfter(endDate)){
+//                appointmentDTOs1.add(appointmentDTOs);
+//            }
+//        }
+//        return appointmentDTOs1;
+    }
+
+    @Override
+    public Double findAmountForClinicInDateRange(Long clinicId, java.util.Date startDate, java.util.Date endDate) {
+        Optional<Clinic> clinicOptional = clinicRepository.findById(clinicId);
+        System.out.println(appointmentRepository.findByAppointmentDateBetween(clinicId,startDate,endDate));
+        if (clinicOptional.isPresent()) {
+            Clinic clinic = clinicOptional.get();
+
+            List<Appointment> clinicAppointments = clinic.getAppointmentList();
+            double totalAmount = 0.0;
+
+            for (Appointment appointment : clinicAppointments) {
+                Date appointmentDate = Date.valueOf(appointment.getAppointmentDate());
+                if (appointmentDate.after(startDate) && appointmentDate.before(endDate)) {
+                    totalAmount += clinic.getFees();
+                }
+            }
+            return totalAmount;
+        } else {
+            return null;
+        }
     }
 
     public ClinicDto addClinic(Long doctorId, ClinicDto clinicDto) {
@@ -66,7 +116,6 @@ public class ClinicServiceImpl implements ClinicService {
     public Optional<Clinic> getClinicById(Long clinicId) {
         return clinicRepository.findById(clinicId);
     }
-
 
 
 }

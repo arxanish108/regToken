@@ -17,7 +17,6 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Clinic {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -27,13 +26,10 @@ public class Clinic {
     private LocalTime startTime;
     private LocalTime endTime;
 
-
     @ManyToOne
     @JsonIgnore
     @JoinColumn(name = "doctorId")
     private Doctor doctor;
-
-
 
     @OneToMany( cascade = CascadeType.ALL)
     private List<Appointment> appointmentList = new ArrayList<>();
@@ -46,12 +42,9 @@ public class Clinic {
         List<AppointmentDTOs> appointmentDTOs = new ArrayList<>();
         for(Appointment appointment : this.appointmentList){
             appointmentDTOs.add(appointment.getAppointmentDto());
-            System.out.println(appointment.getAppointmentDto().getAadharNumber());
         }
         return appointmentDTOs;
     }
-
-    //private HashMap<Clinic, List<AppointmentPatient>> map = new HashMap<>();
 
 
 }

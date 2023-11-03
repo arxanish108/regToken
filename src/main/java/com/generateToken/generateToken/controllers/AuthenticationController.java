@@ -2,7 +2,6 @@ package com.generateToken.generateToken.controllers;
 
 import com.generateToken.generateToken.dto.AuthenticationRequest;
 import com.generateToken.generateToken.dto.AuthenticationResponse;
-import com.generateToken.generateToken.services.Impl.AuthServiceImpl;
 import com.generateToken.generateToken.services.jwt.UserDetailsServiceImpl;
 import com.generateToken.generateToken.util.JwtUtil;
 import jakarta.servlet.http.HttpServletResponse;
@@ -31,6 +30,7 @@ public class AuthenticationController {
 
     @PostMapping("/authenticate")
     public AuthenticationResponse createAuthenticationToken(@RequestBody AuthenticationRequest authenticationRequest, HttpServletResponse response) throws BadCredentialsException, DisabledException, UsernameNotFoundException, IOException {
+
         try {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authenticationRequest.getEmail(), authenticationRequest.getPassword()));
         } catch (BadCredentialsException e) {
@@ -46,4 +46,5 @@ public class AuthenticationController {
         return new AuthenticationResponse(jwt);
 
     }
+
 }
